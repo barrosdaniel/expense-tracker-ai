@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useExpenses } from '@/hooks/useExpenses';
-import { computeStats, computeCategoryTotals, computeMonthlyTotals, formatCurrency } from '@/utils';
+import { computeStats, computeCategoryTotals, computeMonthlyTotals, formatCurrency, exportToCSV } from '@/utils';
 import SummaryCards from '@/components/SummaryCards';
 import { MonthlyBarChart, CategoryPieChart, CategoryBreakdown } from '@/components/SpendingCharts';
 import { CATEGORY_ICONS } from '@/types';
@@ -28,9 +28,18 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 text-sm mt-1">Overview of your spending patterns</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-500 text-sm mt-1">Overview of your spending patterns</p>
+        </div>
+        <button
+          onClick={() => exportToCSV(expenses)}
+          disabled={expenses.length === 0}
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          ⬇ Export CSV
+        </button>
       </div>
 
       {/* Summary cards */}

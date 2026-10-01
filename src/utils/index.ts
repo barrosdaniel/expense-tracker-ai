@@ -246,13 +246,12 @@ export function computeMonthlyTotals(expenses: Expense[]): MonthlyTotal[] {
 // ─── CSV Export ───────────────────────────────────────────────────────────────
 
 export function exportToCSV(expenses: Expense[]): void {
-  const headers = ['Date', 'Amount', 'Category', 'Description', 'Created At'];
+  const headers = ['Date', 'Category', 'Amount', 'Description'];
   const rows = expenses.map((e) => [
     e.date,
-    e.amount.toFixed(2),
     e.category,
+    e.amount.toFixed(2),
     `"${e.description.replace(/"/g, '""')}"`,
-    format(parseISO(e.createdAt), 'yyyy-MM-dd HH:mm:ss'),
   ]);
 
   const csv = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
