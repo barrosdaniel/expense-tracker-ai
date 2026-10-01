@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { Expense, CATEGORIES, ExpenseFilters } from '@/types';
-import { formatCurrency, formatDate, exportToCSV } from '@/utils';
+import { formatCurrency, formatDate } from '@/utils';
 import CategoryBadge from './CategoryBadge';
+import ExportModal from './ExportModal';
 
 interface Props {
   expenses: Expense[];
@@ -38,6 +39,7 @@ export default function ExpenseList({
 }: Props) {
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
 
   function handleDelete(id: string) {
     if (confirmDeleteId === id) {
@@ -46,10 +48,6 @@ export default function ExpenseList({
     } else {
       setConfirmDeleteId(id);
     }
-  }
-
-  function handleExport() {
-    exportToCSV(filtered.length > 0 ? filtered : expenses);
   }
 
   return (
@@ -88,11 +86,11 @@ export default function ExpenseList({
             )}
           </button>
           <button
-            onClick={handleExport}
-            className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition"
+            onClick={() => setShowExportModal(true)}
+            className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition font-medium"
           >
             <DownloadIcon />
-            Export CSV
+            Export Data
           </button>
         </div>
       </div>
@@ -227,6 +225,13 @@ export default function ExpenseList({
           </span>
         </div>
       )}
+
+      {/* Export Modal */}
+      <ExportModal
+        expenses={expenses}
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+      />
     </div>
   );
 }
