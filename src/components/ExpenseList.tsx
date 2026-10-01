@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { Expense, CATEGORIES, ExpenseFilters } from '@/types';
-import { formatCurrency, formatDate, exportToCSV } from '@/utils';
+import { formatCurrency, formatDate } from '@/utils';
 import CategoryBadge from './CategoryBadge';
+import CloudExportHub from './CloudExportHub';
 
 interface Props {
   expenses: Expense[];
@@ -38,6 +39,7 @@ export default function ExpenseList({
 }: Props) {
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [showCloudExport, setShowCloudExport] = useState(false);
 
   function handleDelete(id: string) {
     if (confirmDeleteId === id) {
@@ -46,10 +48,6 @@ export default function ExpenseList({
     } else {
       setConfirmDeleteId(id);
     }
-  }
-
-  function handleExport() {
-    exportToCSV(filtered.length > 0 ? filtered : expenses);
   }
 
   return (
@@ -88,11 +86,11 @@ export default function ExpenseList({
             )}
           </button>
           <button
-            onClick={handleExport}
-            className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition"
+            onClick={() => setShowCloudExport(true)}
+            className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg border border-violet-200 bg-violet-50 text-violet-700 hover:bg-violet-100 transition font-medium"
           >
-            <DownloadIcon />
-            Export CSV
+            <CloudIcon />
+            Export & Share
           </button>
         </div>
       </div>
@@ -227,6 +225,13 @@ export default function ExpenseList({
           </span>
         </div>
       )}
+
+      {/* Cloud Export Hub drawer */}
+      <CloudExportHub
+        expenses={expenses}
+        isOpen={showCloudExport}
+        onClose={() => setShowCloudExport(false)}
+      />
     </div>
   );
 }
@@ -324,10 +329,10 @@ function SearchIcon({ className }: { className?: string }) {
   );
 }
 
-function DownloadIcon() {
+function CloudIcon() {
   return (
     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 10l5 5 5-5M12 3v12" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
     </svg>
   );
 }
