@@ -1,36 +1,80 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+# ─── Dependencies ────────────────────────────────────────────────────────────
+node_modules/
+.pnp
 .pnp.js
 .yarn/install-state.gz
 
-# testing
-/coverage
+# ─── Next.js build output ────────────────────────────────────────────────────
+.next/
+out/
+build/
 
-# next.js
-/.next/
-/out/
+# ─── TypeScript ──────────────────────────────────────────────────────────────
+*.tsbuildinfo
+next-env.d.ts
 
-# production
-/build
+# ─── Testing & coverage ──────────────────────────────────────────────────────
+coverage/
+.nyc_output/
 
-# misc
-.DS_Store
-*.pem
+# ─── Environment variables ───────────────────────────────────────────────────
+# Keep .env.example committed; ignore everything else
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+.env*.local
 
-# debug
+# ─── Debug logs ──────────────────────────────────────────────────────────────
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
 
-# local env files
-.env*.local
+# ─── OS-generated files ──────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
 
-# vercel
+# ─── Editor & IDE ────────────────────────────────────────────────────────────
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+*~
+
+# ─── Certificates & secrets ──────────────────────────────────────────────────
+*.pem
+*.key
+*.cert
+*.p12
+*.pfx
+
+# ─── Deployment platforms ────────────────────────────────────────────────────
 .vercel
+.netlify
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# ─── Miscellaneous ───────────────────────────────────────────────────────────
+*.tgz
+*.zip
+.cache/
+tmp/
+temp/
